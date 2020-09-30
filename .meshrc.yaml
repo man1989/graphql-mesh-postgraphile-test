@@ -1,0 +1,15 @@
+sources:
+  - name: graphile
+    handler:
+      postgraphile:
+        connectionString: postgres://demo:demo@localhost:5432/demo
+        cacheIntrospection: true
+        appendPlugins:
+          - "postgraphile-plugin-connection-filter"
+additionalTypeDefs: |
+      extend type Query {
+        cities(filter: CityFilter): [City]
+      }
+
+additionalResolvers:
+  - ./add-resolvers.js
