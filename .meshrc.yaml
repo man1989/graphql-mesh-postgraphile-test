@@ -6,9 +6,26 @@ sources:
         cacheIntrospection: true
         appendPlugins:
           - "postgraphile-plugin-connection-filter"
+      transforms:
+        - prefix:
+            value: DB_
+        - namingConvention:
+            fieldNames: snakeCase
+  - name: rest
+    handler:
+        openapi:
+          source: https://petstore.swagger.io/v2/swagger.json
+    transforms:
+      - prefix:
+          value: REST_
+      - namingConvention:
+          fieldNames: snakeCase 
 additionalTypeDefs: |
+      type Test{
+        name: String
+      }
       extend type Query {
-        cities(filter: CityFilter): [City]
+        cities(filter: CityFilter): CitiesConnection
       }
 
 additionalResolvers:
