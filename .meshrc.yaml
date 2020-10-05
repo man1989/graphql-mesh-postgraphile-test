@@ -2,15 +2,15 @@ sources:
   - name: graphile
     handler:
       postgraphile:
-        connectionString: postgres://demo:demo@localhost:5432/demo
+        connectionString: postgres://demo:demo@localhost:5433/demo
         cacheIntrospection: true
         appendPlugins:
           - "postgraphile-plugin-connection-filter"
-      transforms:
-        - prefix:
-            value: DB_
-        - namingConvention:
-            fieldNames: snakeCase
+    transforms:
+      - prefix:
+          value: DB_
+      - namingConvention:
+          fieldNames: snakeCase
   - name: rest
     handler:
         openapi:
@@ -25,7 +25,7 @@ additionalTypeDefs: |
         name: String
       }
       extend type Query {
-        cities(filter: CityFilter): CitiesConnection
+        cities(filter: DB_CityFilter): DB_CitiesConnection
       }
 
 additionalResolvers:
